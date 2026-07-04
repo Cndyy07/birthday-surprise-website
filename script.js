@@ -157,12 +157,12 @@ document.addEventListener("DOMContentLoaded", () => {
           try {
             if (music.paused) {
               await music.play();
-              containerPlayer.classList.add("music-active");
-              playIcon.setAttribute("data-lucide", "pause-circle");
+              if (containerPlayer) containerPlayer.classList.add("music-active");
+              if (playIcon) playIcon.setAttribute("data-lucide", "pause-circle");
             } else {
               music.pause();
-              containerPlayer.classList.remove("music-active");
-              playIcon.setAttribute("data-lucide", "play-circle");
+              if (containerPlayer) containerPlayer.classList.remove("music-active");
+              if (playIcon) playIcon.setAttribute("data-lucide", "play-circle");
             }
             lucide.createIcons();
           } catch (err) {
@@ -173,11 +173,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (muteBtn) {
         muteBtn.addEventListener("click", () => {
+          if (!music) return;
           music.muted = !music.muted;
           if (music.muted) {
-            muteIcon.setAttribute("data-lucide", "volume-x");
+            if (muteIcon) muteIcon.setAttribute("data-lucide", "volume-x");
           } else {
-            muteIcon.setAttribute("data-lucide", "volume-2");
+            if (muteIcon) muteIcon.setAttribute("data-lucide", "volume-2");
           }
           lucide.createIcons();
         });
@@ -226,8 +227,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (surpriseBtn) {
         surpriseBtn.addEventListener("click", () => {
-          const val = recipientInput.value.trim();
-          currentRecipient = val !== "" ? val : "Sahabat Terbaikku";
+          if (recipientInput) {
+            const val = recipientInput.value.trim();
+            currentRecipient = val !== "" ? val : "Sahabat Terbaikku";
+          }
           if (dynamicName) dynamicName.textContent = `Untuk: ${currentRecipient}`;
           
           const messageTarget = document.getElementById("message");
@@ -340,26 +343,31 @@ document.addEventListener("DOMContentLoaded", () => {
       if (blowBtn) blowBtn.addEventListener("click", extinguishCandle);
       if (celebrateAgainBtn) celebrateAgainBtn.addEventListener("click", resetCandle);
 
-      // AUDIO DETECTION (Web Audio API)
+      // AUDIO DETECTION (Web Audio API Modern - Tanpa ScriptProcessor)
+      let audioLoop = null;
+
       async function setupMicrophone() {
         try {
           const stream = await navigator.mediaDevices.getUserMedia({ audio: true, video: false });
           const audioContext = new (window.AudioContext || window.webkitAudioContext)();
           const analyser = audioContext.createAnalyser();
           const microphone = audioContext.createMediaStreamSource(stream);
-          const javascriptNode = audioContext.createScriptProcessor(2048, 1, 1);
 
           analyser.smoothingTimeConstant = 0.8;
-          analyser.fftSize = 1024;
+          analyser.fftSize = 256; 
 
           microphone.connect(analyser);
-          analyser.connect(javascriptNode);
-          javascriptNode.connect(audioContext.destination);
 
           if (micStatusContainer) micStatusContainer.style.display = "flex";
 
-          javascriptNode.onaudioprocess = () => {
-            if (isBlown) return;
+          if (audioLoop) clearInterval(audioLoop);
+          
+          audioLoop = setInterval(() => {
+            if (isBlown) {
+              clearInterval(audioLoop);
+              return;
+            }
+            
             const array = new Uint8Array(analyser.frequencyBinCount);
             analyser.getByteFrequencyData(array);
             let values = 0;
@@ -370,12 +378,16 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
             const average = values / length;
-            if (average > 60) {
+            
+            // Batas volume suara tiupan angin ke mikrofon (bisa kamu sesuaikan antara 40-60)
+            if (average > 50) {
               extinguishCandle();
+              clearInterval(audioLoop);
             }
-          };
+          }, 50); 
+
         } catch (e) {
-          console.log("Mikrofon diblokir atau tidak disupport. Menggunakan tombol manual.");
+          console.log("Mikrofon diblokir, tidak diizinkan, atau tidak disupport. Menggunakan tombol manual.");
         }
       }
 
