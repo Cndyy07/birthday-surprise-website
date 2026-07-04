@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy Birthday Suprise</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+  
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- HUBUNGKAN KE FILE CSS EKSTERNAL -->
+  <link rel="stylesheet" href="style.css">
+
+  </head>
+<body>
+    <!-- Scroll Progress & Loader -->
+  <div id="scroll-progress"></div>
+  
+  <div id="loader">
+    <div class="loader-content">
+      <div class="loader-heart">❤️</div>
+      <div class="loader-text">MEMPERSIAPKAN KEJUTAN...</div>
+    </div>
+  </div>
+
+  <!-- Music Player Header -->
+  <header>
+    <div class="music-player" id="player-container">
+      <button class="music-btn" id="play-btn" aria-label="Play Music">
+        <i data-lucide="play-circle" id="play-icon"></i>
+      </button>
+      <div class="music-info">Happy Birthday To You</div>
+      <div class="music-visualizer" id="visualizer">
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+      </div>
+      <button class="music-btn" id="mute-btn" aria-label="Mute Music" style="width: 24px; height: 24px; background: none;">
+        <i data-lucide="volume-2" id="mute-icon" style="width: 16px;"></i>
+      </button>
+    </div>
+  </header>
+
+  <!-- Background Dynamic Canvas -->
+  <canvas id="bg-canvas"></canvas>
+
+  <!-- ==========================================================================
+       HERO SECTION
+       ========================================================================== */ -->
+  <section id="hero">
+    <div class="container">
+      <div class="hero-wrapper">
+        <div class="hero-badge">
+          <i data-lucide="sparkles" style="width:14px; height:14px;"></i> Hari Istimewa Telah Tiba
+        </div>
+        <h1 class="hero-title">
+          Happy Birthday <br><span class="pink-text">To You</span> ❤️</span>
+        </h1>
+        <p class="hero-subtitle">
+          Momen paling ditunggu akhirnya datang juga! Yuk ketik nama kamu dulu di bawah ini biar suasananya makin spesial.
+        </p>
+
+        <!-- Dynamic Personalization Input Box -->
+        <div class="name-customizer-box">
+          <div class="input-group">
+            <input type="text" id="recipient-input" placeholder=" " class="input-field" autocomplete="off">
+            <label class="input-label">Siapa yang lagi bertambah umur hari ini?</label>
+          </div>
+          <button class="btn" id="surprise-btn">
+            Buka Surprise <i data-lucide="heart"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       MESSAGE SECTION
+       ========================================================================== */ -->
+  <section id="message">
+    <div class="container">
+      <div class="section-header">
+        <h2>Pesan Buat Kamu</h2>
+        <p>PILIH VIBE PESAN YANG PALING KAMU SUKA DI BAWAH INI</p>
+      </div>
+
+      <!-- Vibe Selector Buttons -->
+      <div class="vibe-selector-container">
+        <button class="vibe-btn active" data-vibe="sweet">
+          <span>🥰</span> So Sweet
+        </button>
+        <button class="vibe-btn" data-vibe="gokil">
+          <span>🤪</span> Gokil/Lucu
+        </button>
+        <button class="vibe-btn" data-vibe="deep">
+          <span>🥺</span> Deep/Puitis
+        </button>
+      </div>
+
+      <div class="aesthetic-card">
+        <div class="msg-card-content">
+          <div class="msg-icon">
+            <i data-lucide="gift" style="width: 45px; height: 45px;"></i>
+          </div>
+          <div class="recipient-name" id="dynamic-name">Untukmu Tercinta</div>
+          
+          <div class="typing-container">
+            <span id="typed-text"></span><span class="cursor"></span>
+          </div>
+
+          <button class="btn" id="read-again-btn">
+            <i data-lucide="refresh-cw"></i> Baca Ulang
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       VIRTUAL GIFT SECTION (SIMPLE & CLASSIC)
+       ========================================================================== */ -->
+  <section id="gifts-section">
+    <div class="container">
+      <div class="section-header">
+        <h2>Pilih Kado Virtualmu 🎁</h2>
+        <p>SENGGAKNYA DAPET KADO SEDERHANA BIAR HARI INI MAKIN HAPPY. KLIK UNTUK BUKA!</p>
+      </div>
+
+      <div class="gift-grid">
+        <!-- Gift 1 -->
+        <div class="gift-card" id="gift-card-1">
+          <div class="gift-box-wrapper">
+            <div class="gift-emoji">🎁</div>
+            <div class="gift-label">Kado Pertama</div>
+          </div>
+          <div class="gift-reveal-content">
+            <div class="reveal-emoji">🍫</div>
+            <h3>Cokelat Manis</h3>
+            <p>Sebatang cokelat virtual biar seluruh harimu ke depan selalu manis, penuh energi, dan jauh dari kata sedih!</p>
+          </div>
+        </div>
+
+        <!-- Gift 2 -->
+        <div class="gift-card" id="gift-card-2">
+          <div class="gift-box-wrapper">
+            <div class="gift-emoji">🎁</div>
+            <div class="gift-label">Kado Kedua</div>
+          </div>
+          <div class="gift-reveal-content">
+            <div class="reveal-emoji">💐</div>
+            <h3>Buket Bunga</h3>
+            <p>Buket bunga segar virtual buat mencerahkan matamu dan mengingatkan kalau kamu adalah pribadi yang indah!</p>
+          </div>
+        </div>
+
+        <!-- Gift 3 -->
+        <div class="gift-card" id="gift-card-3">
+          <div class="gift-box-wrapper">
+            <div class="gift-emoji">🎁</div>
+            <div class="gift-label">Kado Ketiga</div>
+          </div>
+          <div class="gift-reveal-content">
+            <div class="reveal-emoji">🧸</div>
+            <h3>Boneka Teddy Bear</h3>
+            <p>Boneka beruang virtual yang super empuk dan lucu, siap nemenin kamu kapan pun kamu butuh sandaran hangat!</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       MEMORIES SECTION (Pesan Inspiratif)
+       ========================================================================== */ -->
+  <section id="memories">
+    <div class="container">
+      <div class="section-header">
+        <h2>Inspirasi Hari Ini</h2>
+        <p>CORETAN KATA-KATA BIAR HARIMU MAKIN BERSEMANGAT</p>
+      </div>
+
+      <div class="memories-grid">
+        <!-- Card 1 -->
+        <div class="memory-card">
+          <div class="card-top">
+            <div class="memory-icon">❤️</div>
+            <h3 class="memory-title">Kebahagiaan Sejati</h3>
+            <p class="memory-text">Semoga setiap jengkal langkahmu dipenuhi oleh kedamaian, tawa riang, dan orang-orang baik yang menyayangimu tanpa syarat.</p>
+          </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="memory-card">
+          <div class="card-top">
+            <div class="memory-icon">⭐</div>
+            <h3 class="memory-title">Mimpi Tanpa Batas</h3>
+            <p class="memory-text">Jangan pernah berhenti mengejar impianmu yang setinggi langit. Dunia ini luas dan kamu memiliki kekuatan penuh untuk menaklukkannya.</p>
+          </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="memory-card">
+          <div class="card-top">
+            <div class="memory-icon">🎁</div>
+            <h3 class="memory-title">Jiwa yang Luar Biasa</h3>
+            <p class="memory-text">Terima kasih telah menjadi pribadi yang hangat dan luar biasa bagi semua orang di sekitarmu. Kehadiranmu adalah anugerah terindah.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       INTERACTIVE BIRTHDAY CAKE SECTION
+       ========================================================================== */ -->
+  <section id="cake-section">
+    <div class="container">
+      <div class="section-header">
+        <h2>Tiup Lilin Interaktif 🎂</h2>
+        <p>BOLEH TIUP MIKROFON PERANGKATMU ATAU KLIK TOMBOL TIUP DI BAWAH</p>
+      </div>
+
+      <div class="aesthetic-card">
+        <div class="cake-container">
+          <div class="cake-visual">
+            <div class="candle">
+              <div class="wick"></div>
+              <div class="flame" id="cake-flame"></div>
+            </div>
+            <div class="cake-base">
+              <div class="cream-drip">
+                <div class="drip-drop"></div>
+                <div class="drip-drop"></div>
+                <div class="drip-drop"></div>
+                <div class="drip-drop"></div>
+                <div class="drip-drop"></div>
+                <div class="drip-drop"></div>
+                <div class="drip-drop"></div>
+                <div class="drip-drop"></div>
+                <div class="drip-drop"></div>
+                <div class="drip-drop"></div>
+              </div>
+              <div class="cake-decoration">
+                <div class="cherry"></div>
+                <div class="cherry"></div>
+                <div class="cherry"></div>
+                <div class="cherry"></div>
+              </div>
+            </div>
+            <div class="cake-plate"></div>
+          </div>
+
+          <div class="wish-text" id="wish-celebration-text">Make a Wish! ✨</div>
+
+          <div class="mic-status" id="mic-status-container" style="display:none;">
+            <div class="pulse-indicator"></div>
+            <span id="mic-status-text">Deteksi tiupan mikrofon aktif... Coba tiup ponsel/laptopmu!</span>
+          </div>
+        </div>
+
+        <div class="cake-controls">
+          <button class="btn" id="blow-btn">
+            <i data-lucide="wind"></i> Tiup Lilin Manual
+          </button>
+          <button class="btn" id="celebrate-again-btn" style="display:none;">
+            <i data-lucide="sparkles"></i> Nyalakan Ulang
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       WISHES GENERATOR SECTION
+       ========================================================================== */ -->
+  <section id="wishes-generator">
+    <div class="container">
+      <div class="section-header">
+        <h2>Mesin Pengacak Doa ✨</h2>
+        <p>BUTUH IDE DOA YANG LUCU ATAU SERIUS? AJAK MESINNYA ACAK DI SINI</p>
+      </div>
+
+      <div class="aesthetic-card">
+        <div class="generator-grid">
+          
+          <div class="generator-left">
+            <div>
+              <span class="textarea-label">Harapan Untukmu</span>
+              <div class="wish-output-box">
+                <p class="wish-output-text" id="generated-wish-text">Tekan tombol di bawah untuk membuat satu doa manis secara instan!</p>
+              </div>
+            </div>
+            <div class="gen-actions">
+              <button class="btn" id="generate-btn" style="flex: 1;">
+                <i data-lucide="dices"></i> Acak Doa
+              </button>
+              <button class="btn" id="copy-btn" aria-label="Salin Ucapan" style="aspect-ratio: 1; padding: 0.9rem;">
+                <i data-lucide="copy"></i>
+              </button>
+            </div>
+          </div>
+
+          <div class="generator-right">
+            <div>
+              <label for="custom-wish-input" class="textarea-label">Tulis Doa Versimu Sendiri</label>
+              <textarea id="custom-wish-input" placeholder="Tulis doa atau harapan terbaik kamu di sini biar tersimpan abadi di ruang kejutan ini..." class="custom-wish-area"></textarea>
+            </div>
+            <button class="btn" id="save-wish-btn">
+              <i data-lucide="bookmark"></i> Simpan Doa Kustom
+            </button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       CLOSING SECTION
+       ========================================================================== */ -->
+  <section id="closing">
+    <div class="container">
+      <h2 class="closing-title">Sekali Lagi, Happy Birthday! 🎉</h2>
+      <p class="closing-text">
+        Semoga hidupmu selalu diiringi kesehatan, petualangan seru yang menyenangkan, kesuksesan luar biasa, dan senyum manis yang bikin orang lain ikutan bahagia. You are amazing!
+      </p>
+      <button class="btn" id="thanks-btn">
+        Sama-Sama, Makasih Banyak ❤️
+      </button>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      <p>Dibuat Untuk Hari Spesialmu<span class="heart-icon">❤️</span> by cindy olivia</p>
+    </div>
+  </footer>
+
+  <!-- Floating Back to Top Button -->
+  <button id="back-to-top" aria-label="Back to top">
+    <i data-lucide="arrow-up"></i>
+  </button>
+
+  <!-- Notification Toast Alert -->
+  <div id="toast">
+    <i data-lucide="check-circle" style="color: var(--light-pink);"></i>
+    <span id="toast-message">Pesan disalin ke papan klip!</span>
+  </div>
+
+  <!-- HUBUNGKAN AUDIO -->
+  <audio id="bg-music" loop>
+    <source src="music/audio.mp3" type="audio/mpeg">
+    Browser Anda tidak mendukung audio.
+  </audio>
+
+  <!-- HUBUNGKAN KE FILE JAVASCRIPT EKSTERNAL -->
+  <script src="script.js"></script>
+</body>
+</html>
