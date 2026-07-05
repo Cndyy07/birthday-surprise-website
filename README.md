@@ -25,7 +25,7 @@ Birthday Surprise Website adalah website ucapan ulang tahun interaktif yang dibu
 ## 📁 Struktur Project
 
 ```text
-Birthday-Surprise/
+birthday project/
 │
 ├── index.html
 ├── style.css
